@@ -34,8 +34,6 @@ public abstract class Flower {
     }
 }
 
-package lesson8.task4;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,7 +132,7 @@ public class FlowerMarket {
 
 import java.util.Locale;
 
-import static lesson8.task4.FlowerMarket.Flowers.*;
+import static FlowerMarket.Flowers.*;
 
 public class Demo {
     public static void main(String[] args) {
