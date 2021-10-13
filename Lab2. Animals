@@ -1,0 +1,272 @@
+public abstract class Animal {
+    private String food;
+    private String location;
+
+    public Animal() {
+    }
+
+    public Animal(String food, String location) {
+        this.food = food;
+        this.location = location;
+    }
+
+    public String getFood() {
+        return food;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public abstract void eat();
+
+    public abstract String makeNoise();
+
+    public void sleep() {
+        System.out.println("Животное спит.");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Animal animal = (Animal) o;
+
+        if (food != null ? !food.equals(animal.food) : animal.food != null) return false;
+        return location != null ? location.equals(animal.location) : animal.location == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = food != null ? food.hashCode() : 0;
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        return result;
+    }
+}
+
+
+public class Cat extends Animal {
+    private String color;
+
+    public Cat() {
+    }
+
+    public Cat(String food, String location) {
+        super(food, location);
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    @Override
+    public void eat() {
+        System.out.println("Кошка ест.");
+    }
+
+    @Override
+    public String makeNoise() {
+        return "Мя-я-я-я-я-я-у!!!!";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cat)) return false;
+        if (!super.equals(o)) return false;
+
+        Cat cat = (Cat) o;
+
+        return color != null ? color.equals(cat.color) : cat.color == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "food='" + getFood() + '\'' +
+                ", location='" + getLocation() + '\'' +
+                '}';
+    }
+}
+
+public class Dog extends Animal {
+    private String name;
+
+    public Dog() {
+    }
+
+    public Dog(String food, String location) {
+        super(food, location);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void eat() {
+        System.out.println("Собака ест.");
+    }
+
+    @Override
+    public String makeNoise() {
+        return "Гав-гав-гав!!!";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Dog)) return false;
+        if (!super.equals(o)) return false;
+
+        Dog dog = (Dog) o;
+
+        return name != null ? name.equals(dog.name) : dog.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Dog{" +
+                "food='" + getFood() + '\'' +
+                ", location='" + getLocation() + '\'' +
+                '}';
+    }
+}
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class Horse extends Animal implements Serializable {
+    private double weight;
+
+    public Horse() {
+    }
+
+    public Horse(String food, String location) {
+        super(food, location);
+    }
+
+    public Horse(String food, String location, double weight) {
+        this(food, location);
+        this.weight = weight;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public void eat() {
+        System.out.println("Лошадь ест.");
+    }
+
+    @Override
+    public String makeNoise() {
+        return "Иго-го-го-го!!!";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Horse)) return false;
+        if (!super.equals(o)) return false;
+
+        Horse horse = (Horse) o;
+
+        return Double.compare(horse.weight, weight) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        long temp;
+        temp = Double.doubleToLongBits(weight);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Horse{" +
+                "food: '" + getFood() + '\'' +
+                ", location: '" + getLocation() + '\'' +
+                ", weight = " + weight +
+                '}';
+    }
+
+    private void writeObject(ObjectOutputStream os) {
+        try {
+            os.defaultWriteObject();
+            os.writeObject(getFood());
+            os.writeObject(getLocation());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readObject(ObjectInputStream is) {
+        try {
+            is.defaultReadObject();
+            this.setFood((String) is.readObject());
+            this.setLocation((String) is.readObject());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class Veterinarian {
+    public void treatAnimal(Animal animal) {
+        System.out.println(animal);
+    }
+}
+
+public class Demo {
+    public static void main(String[] args) {
+        Veterinarian veterinarian = new Veterinarian();
+        Animal[] animals = new Animal[3];
+        animals[0] = new Dog("Каша и кости", "Двор частного дома");
+        animals[1] = new Cat("Молоко и рыба", "Квартира");
+        animals[2] = new Horse("Сено", "Конеферма");
+
+        for (Animal animal : animals) {
+            veterinarian.treatAnimal(animal);
+        }
+    }
+}
