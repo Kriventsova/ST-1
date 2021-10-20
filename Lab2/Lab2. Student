@@ -1,16 +1,60 @@
-public class Student {
-  String firstName, lastName, group;
-  double avgMark;
+//Студент
+package com.company;
 
-  public Student(String firstName, String lastName, String group, double avgMark) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.group = group;
-    this.avgMark = avgMark;
-    
-  public Student() {
-  }
+public class Student
+{   String firstName, lastName, group;
+    double avgMark;
+    //генерируем конструктор
+    public Student(String firstName, String lastName, String group, double avgMark) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.group = group;
+        this.avgMark = avgMark;
+    }
+//конструктор
+    public Student() {
+    }
+//возвращает сумму стипендии (Если средняя оценка студента равна 5, то сумма 100, иначе 80. Переопределить этот метод в классе Aspirant. Если средняя оценка аспиранта равна 5, то сумма 200, иначе 180.)
+    public double getScholarship() {
+        return avgMark == 5 ? 100 : 80;
+    }
 
-public double getScholarship() {
-  return avgMark == 5 ? 100 : 80;
+
+
+}
+
+//Аспирант
+package com.company;
+//аспирант - наследник студента
+public class Aspirant extends Student{
+    String work;
+//конструктор из студента
+    public Aspirant(String firstName, String lastName, String group, double avgMark, String work)
+    {
+        super(firstName, lastName, group, avgMark);
+        this. work = work;
+    }
+    void print(){
+        System.out.println(firstName);
+    }
+//переопределили метод
+    @Override
+    public double getScholarship() {
+        return super.getScholarship();
+    }
+
+    //создадим два объекта
+    public static void main(String[] args)
+    {
+        Student student = new Student("Иван","Иванов","Group1",4.5);
+        Aspirant aspirant1 = new Aspirant("Петр","Петров","Group2",5, "Work1");
+        //переменная которая ссылается на объект типа аспирант
+        Student aspirant2 = new Aspirant("Петр", "Сидоров","Group3", 4.8, "Work2");
+        Student[] students = {student, aspirant1, aspirant2};
+        for (Student s : students)
+        {
+            System.out.println(s.getScholarship());
+        }
+    }
+
 }
