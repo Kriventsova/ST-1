@@ -1,6 +1,6 @@
-import Category;
-import Item;
-import ItemDAO;
+import model.Category;
+import model.Item;
+import model.ItemDAO;
 
 import java.util.ArrayList;
 import java.util.Collections;
