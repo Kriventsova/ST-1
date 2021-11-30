@@ -1,6 +1,6 @@
-import Bucket;
-import BucketDAO;
-import User;
+import model.Bucket;
+import task2.model.BucketDAO;
+import task2.model.User;
 
 import java.io.*;
 
