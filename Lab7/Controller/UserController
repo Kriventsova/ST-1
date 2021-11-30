@@ -1,6 +1,5 @@
-import User;
-import UserDAO;
-
+import model.User;
+import model.UserDAO;
 import java.util.Map;
 
 public class UserController {
